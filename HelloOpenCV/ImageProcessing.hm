@@ -1,0 +1,44 @@
+//
+//  ImageProcessing.h
+//  HelloOpenCV
+//
+//  Created by Marc Haubenstock on 14/07/2016.
+//  Copyright © 2016 Marc Haubenstock. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+#import "Constants.h"
+#ifdef __cplusplus
+#import <opencv2/opencv.hpp>
+#include "opencv2/imgproc/imgproc.hpp"
+#import "Helpers.hm"
+#endif
+
+using namespace cv;
+
+typedef enum{ XGrad = 0, YGrad, XYGrad} gradientMode;
+
+@interface ImageProcessing : NSObject
+
+#ifdef __cplusplus
+/*
+ * http://thume.ca/projects/2012/11/04/simple-accurate-eye-center-tracking-in-opencv/
+ */
++(void)computeMatGradientX:(const Mat&) mat Out:(Mat&)outMat;
++(void)computeMatGradientY:(const Mat&) mat Out:(Mat&)outMat;
++(void)invertMat:(Mat&)mat_src;
+// Extract y channel form YUV image
++(void)extractLuminance:(Mat&)image To:(Mat&)luminance;
++(void)guassianBlur:(Mat&)src withSigmaX:(int)sigmaX SigmaY:(int)sigmaY;
++(void)setupDetectors;
+// Returns biggest face
++(cv::Rect)detectFace:(Mat&)src drawRect:(bool)drawFlag;
++(std::vector<cv::Rect>)detectEyes:(Mat&)faceROI drawRect:(bool)drawFlag;
++(std::vector<cv::Rect>)estimateEyes:(cv::Rect&)faceROI xOffset:(int)x_off yOffset:(int)y_off drawRect:(bool)drawFlag;
++(cv::Point)findEyeCenterWithFace:(const cv::Mat&)face andEye:(const cv::Rect&)eyeROI debug:(cv::Mat&)outMat;
++(void)testPossibleCentersFormula:(int)x Y:(int)y Weight:(const cv::Mat&)weight gradX:(double)gx gradY:(double)gy Out:(cv::Mat&)outMat;
+#endif
+
+
+
+@end

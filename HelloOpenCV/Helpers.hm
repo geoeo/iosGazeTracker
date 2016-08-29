@@ -1,0 +1,34 @@
+//
+//  Helpers.h
+//  HelloOpenCV
+//
+//  Created by Marc Haubenstock on 18/07/2016.
+//  Copyright © 2016 Marc Haubenstock. All rights reserved.
+//
+
+
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+#import "Constants.h"
+#import "myPoint.h"
+#ifdef __cplusplus
+#import <opencv2/opencv.hpp>
+#include "opencv2/imgproc/imgproc.hpp"
+#endif
+
+
+using namespace cv;
+
+@interface Helpers : NSObject
+
+#ifdef __cplusplus
++(cv::Mat)matrixMagnitudeWithX:(const cv::Mat&)matX andY:(const cv::Mat&)matY;
++(double)computeDynamicThresholdWithSrc:(const cv::Mat&)mat andFactor:(double)stdDevFactor;
++(void)ApplyThresholdToGradient:(cv::Mat&)matX andY:(cv::Mat&)matY withMag:(const cv::Mat&) magnitude;
++(cv::Mat)floodKillEdges:(cv::Mat &)mat;
++(void)floodFill:(cv::Mat &)mask Source:(cv::Mat &)mat seedX:(int)x seedY:(int)y;
++(bool)floodShouldPushPoint:(MyPoint *)p andMat:(const cv::Mat&)mat;
+#endif
+
+@end
+
